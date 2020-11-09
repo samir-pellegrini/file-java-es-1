@@ -1,0 +1,43 @@
+bool v;
+void setup()
+{
+  pinMode(2, INPUT);
+  pinMode(2, OUTPUT);
+  pinMode(4, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  v=false;
+  long tempo;
+  long inizio=millis();
+  while(digitalRead(2)== HIGH){
+    v=true;
+  }
+  long fine=millis();
+  if(v==true){
+    tempo=fine-inizio;
+    Serial.print("TEMPO PRESSIONE: "); 
+    Serial.print(tempo);
+    Serial.println("ms"); 
+    
+    if(tempo>1000){
+      digitalWrite(3, HIGH);
+      
+      for (int i=255;i>0;i=i-5){
+        analogWrite(3,i);
+        delay(100);
+      }
+    }
+    if(tempo<1000){
+      
+      for(int i=0;i<2;i++){
+        digitalWrite(4, HIGH);
+        delay(300);
+        digitalWrite(4, LOW);
+        delay(300);
+      } 
+    }
+  }
+}
